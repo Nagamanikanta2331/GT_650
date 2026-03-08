@@ -29,7 +29,7 @@ export default function Quote() {
       {/* Background */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-fixed brightness-50"
-        style={{ backgroundImage: "url('/src/assets/images/Powerful_cinematic_front_view_of_a_royal_enfield_c_delpmaspu.png')" }}
+        style={{ backgroundImage: "url('/images/Powerful_cinematic_front_view_of_a_royal_enfield_c_delpmaspu.png')" }}
       />
       <div className="absolute inset-0 bg-brand-black/60" />
 
