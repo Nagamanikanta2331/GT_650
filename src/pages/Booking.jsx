@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowRight, Phone, CheckCircle } from 'lucide-react';
+import { ArrowRight, Phone, CheckCircle, Loader2 } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 const variantImages = {
   "Apex Grey": "/src/assets/images/models/apex-grey.jpeg",
@@ -14,11 +15,49 @@ const variantImages = {
 export default function Booking() {
   const [selectedVariant, setSelectedVariant] = useState("Mr Clean (Chrome)");
   const [isBooked, setIsBooked] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState(null);
+  const [formData, setFormData] = useState({
+    full_name: '',
+    email: '',
+    phone: '',
+    city: '',
+    pincode: '',
+    test_ride_date: '',
+    message: '',
+  });
 
-  const handleBooking = (e) => {
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleBooking = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setError(null);
+
+    const { error: insertError } = await supabase
+      .from('bookings')
+      .insert([{
+        full_name: formData.full_name,
+        email: formData.email,
+        phone: formData.phone,
+        city: formData.city,
+        pincode: formData.pincode,
+        model_variant: selectedVariant,
+        test_ride_date: formData.test_ride_date,
+        message: formData.message || null,
+      }]);
+
+    setIsSubmitting(false);
+
+    if (insertError) {
+      setError(insertError.message);
+      return;
+    }
+
     setIsBooked(true);
-    // Optional: Auto close or reset form after a few seconds
+    setFormData({ full_name: '', email: '', phone: '', city: '', pincode: '', test_ride_date: '', message: '' });
     setTimeout(() => {
       setIsBooked(false);
     }, 4000);
@@ -94,28 +133,33 @@ export default function Booking() {
         className="w-full md:w-1/2 p-8 md:p-16 lg:p-24 flex items-center justify-center bg-brand-charcoal/30 border-l border-white/5"
       >
         <div className="w-full max-w-lg">
+          {error && (
+            <div className="mb-4 p-3 bg-red-900/30 border border-red-500/40 text-red-300 text-sm font-sans rounded">
+              {error}
+            </div>
+          )}
           <form className="space-y-6" onSubmit={handleBooking}>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-widest text-brand-silver font-sans">Full Name</label>
-                <input required type="text" className="w-full bg-transparent border-b border-white/20 pb-2 text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold transition-colors font-sans" placeholder="Rahul Sharma" />
+                <input required type="text" name="full_name" value={formData.full_name} onChange={handleChange} className="w-full bg-transparent border-b border-white/20 pb-2 text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold transition-colors font-sans" placeholder="Rahul Sharma" />
               </div>
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-widest text-brand-silver font-sans">Email Address</label>
-                <input required type="email" className="w-full bg-transparent border-b border-white/20 pb-2 text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold transition-colors font-sans" placeholder="rahul@example.in" />
+                <input required type="email" name="email" value={formData.email} onChange={handleChange} className="w-full bg-transparent border-b border-white/20 pb-2 text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold transition-colors font-sans" placeholder="rahul@example.in" />
               </div>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-widest text-brand-silver font-sans">Phone Number</label>
-                <input required type="tel" className="w-full bg-transparent border-b border-white/20 pb-2 text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold transition-colors font-sans" placeholder="+91 98765 43210" />
+                <input required type="tel" name="phone" value={formData.phone} onChange={handleChange} className="w-full bg-transparent border-b border-white/20 pb-2 text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold transition-colors font-sans" placeholder="+91 98765 43210" />
               </div>
               <div className="space-y-2">
                 <label className="text-xs uppercase tracking-widest text-brand-silver font-sans">City & Pincode</label>
                 <div className="flex gap-4">
-                  <input required type="text" className="w-2/3 bg-transparent border-b border-white/20 pb-2 text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold transition-colors font-sans" placeholder="Mumbai" />
-                  <input required type="text" className="w-1/3 bg-transparent border-b border-white/20 pb-2 text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold transition-colors font-sans" placeholder="400001" maxLength="6" />
+                  <input required type="text" name="city" value={formData.city} onChange={handleChange} className="w-2/3 bg-transparent border-b border-white/20 pb-2 text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold transition-colors font-sans" placeholder="Mumbai" />
+                  <input required type="text" name="pincode" value={formData.pincode} onChange={handleChange} className="w-1/3 bg-transparent border-b border-white/20 pb-2 text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold transition-colors font-sans" placeholder="400001" maxLength="6" />
                 </div>
               </div>
             </div>
@@ -138,18 +182,18 @@ export default function Booking() {
 
             <div className="space-y-2">
               <label className="text-xs uppercase tracking-widest text-brand-silver font-sans">Preferred Test Ride Date</label>
-              <input required type="date" className="w-full bg-transparent border-b border-white/20 pb-2 text-white focus:outline-none focus:border-brand-gold transition-colors font-sans [color-scheme:dark]" />
+              <input required type="date" name="test_ride_date" value={formData.test_ride_date} onChange={handleChange} className="w-full bg-transparent border-b border-white/20 pb-2 text-white focus:outline-none focus:border-brand-gold transition-colors font-sans [color-scheme:dark]" />
             </div>
 
             <div className="space-y-2">
               <label className="text-xs uppercase tracking-widest text-brand-silver font-sans">Message</label>
-              <textarea rows="4" className="w-full bg-transparent border-b border-white/20 pb-2 text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold transition-colors font-sans resize-none" placeholder="Any specific requirements..."></textarea>
+              <textarea rows="4" name="message" value={formData.message} onChange={handleChange} className="w-full bg-transparent border-b border-white/20 pb-2 text-white placeholder-gray-600 focus:outline-none focus:border-brand-gold transition-colors font-sans resize-none" placeholder="Any specific requirements..."></textarea>
             </div>
 
             <div className="pt-8 flex flex-col sm:flex-row gap-6">
-              <button type="submit" className="flex-1 bg-brand-red text-white py-4 px-8 font-sans uppercase tracking-[0.2em] text-sm font-bold flex items-center justify-center gap-3 hover:bg-red-800 transition-colors group">
-                Book Test Ride
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <button type="submit" disabled={isSubmitting} className="flex-1 bg-brand-red text-white py-4 px-8 font-sans uppercase tracking-[0.2em] text-sm font-bold flex items-center justify-center gap-3 hover:bg-red-800 transition-colors group disabled:opacity-50 disabled:cursor-not-allowed">
+                {isSubmitting ? 'Booking...' : 'Book Test Ride'}
+                {isSubmitting ? <Loader2 className="w-4 h-4 animate-spin" /> : <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />}
               </button>
               <button type="button" className="flex-1 bg-transparent border border-white/20 text-white py-4 px-8 font-sans uppercase tracking-[0.2em] text-sm font-bold flex items-center justify-center gap-3 hover:bg-white/5 transition-colors">
                 Contact Dealer
