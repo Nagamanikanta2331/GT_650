@@ -1,0 +1,40 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: 'Inter', sans-serif;
+  --font-heading: 'Outfit', sans-serif;
+  --font-cinzel: 'Cinzel', serif;
+
+  /* Custom Color Palette */
+  --color-brand-black: #0a0a0a;
+  --color-brand-charcoal: #1c1c1c;
+  --color-brand-silver: #c0c0c0;
+  --color-brand-red: #cc0000;
+  --color-brand-green: #004225;
+  --color-brand-gold: #d4af37;
+}
+
+@layer base {
+  body {
+    @apply bg-brand-black text-gray-200 overflow-x-hidden;
+  }
+}
+
+/* Custom scrollbar to match the dark cinematic aesthetic */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.clip-diagonal {
+  clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+}
