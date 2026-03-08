@@ -8,27 +8,27 @@ const storyData = [
   {
     title: "Pure Café Racer Spirit",
     text: "The Royal Enfield Continental GT 650 is built with the soul of a classic café racer. Its aggressive riding posture, sculpted tank, and racing heritage create a perfect blend of vintage style and modern performance. Designed for riders who crave speed, style, and the thrill of pure motorcycling.",
-    image: "/src/assets/images/Side_profile_cinematic_shot_of_a_royal_enfield_con_delpmaspu.png"
+    image: "/images/Side_profile_cinematic_shot_of_a_royal_enfield_con_delpmaspu.png"
   },
   {
     title: "Engineered for Performance",
     text: "At the heart of the GT 650 lies a powerful 648cc parallel twin engine delivering smooth acceleration and thrilling torque. Built for reliability and performance, it offers a refined riding experience whether you're cruising the highway or attacking twisty roads.",
-    image: "/src/assets/images/Extreme_closeup_macro_shot_of_the_royal_enfield_65_delpmaspu.png"
+    image: "/images/Extreme_closeup_macro_shot_of_the_royal_enfield_65_delpmaspu.png"
   },
   {
     title: "Timeless British-Inspired Design",
     text: "Inspired by the golden era of British café racers, the GT 650 carries a timeless design. From the teardrop fuel tank to the twin-pod instrument cluster, every detail reflects Royal Enfield’s legendary heritage and craftsmanship.",
-    image: "/src/assets/images/Powerful_cinematic_front_view_of_a_royal_enfield_c_delpmaspu.png"
+    image: "/images/Powerful_cinematic_front_view_of_a_royal_enfield_c_delpmaspu.png"
   },
   {
     title: "Ride the Legacy",
     text: "Royal Enfield is more than a motorcycle—it’s a legacy of freedom and adventure. The Continental GT 650 continues this legacy, delivering an unforgettable riding experience that connects riders with the road and the spirit of motorcycling.",
-    image: "/src/assets/images/Royal_enfield_continental_gt_650_motorcycle_riding_delpmaspu.png"
+    image: "/images/Royal_enfield_continental_gt_650_motorcycle_riding_delpmaspu.png"
   },
   {
     title: "Built for True Riders",
     text: "Every curve, every sound, and every ride of the GT 650 speaks to riders who demand authenticity. It’s not just about reaching the destination—it’s about enjoying every moment of the journey.",
-    image: "/src/assets/images/Cinematic_hero_shot_of_a_royal_enfield_continental_delpmaspu.png"
+    image: "/images/Cinematic_hero_shot_of_a_royal_enfield_continental_delpmaspu.png"
   }
 ];
 

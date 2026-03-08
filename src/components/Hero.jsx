@@ -57,7 +57,7 @@ export default function Hero() {
       <div 
         ref={bgRef}
         className="absolute inset-0 w-full h-[120%] -top-[10%] bg-cover bg-center brightness-75"
-        style={{ backgroundImage: `url('/src/assets/images/Cinematic_hero_shot_of_a_royal_enfield_continental_delpmaspu.png')` }}
+        style={{ backgroundImage: `url('/images/Cinematic_hero_shot_of_a_royal_enfield_continental_delpmaspu.png')` }}
       />
       
       {/* Vignette Overlay for cinematic feel */}

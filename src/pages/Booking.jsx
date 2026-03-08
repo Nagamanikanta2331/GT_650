@@ -4,12 +4,12 @@ import { ArrowRight, Phone, CheckCircle, Loader2 } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 const variantImages = {
-  "Apex Grey": "/src/assets/images/models/apex-grey.jpeg",
-  "Slipstream Blue": "/src/assets/images/models/slipstream-blue.jpg",
-  "Dux Deluxe": "/src/assets/images/models/dux dulex.png",
-  "Rocker Red": "/src/assets/images/models/rocker red.png",
-  "British Racing Green": "/src/assets/images/models/britsh racing green.png",
-  "Mr Clean (Chrome)": "/src/assets/images/models/mr clean.png"
+  "Apex Grey": "/images/models/apex-grey.jpeg",
+  "Slipstream Blue": "/images/models/slipstream-blue.jpg",
+  "Dux Deluxe": "/images/models/dux dulex.png",
+  "Rocker Red": "/images/models/rocker red.png",
+  "British Racing Green": "/images/models/britsh racing green.png",
+  "Mr Clean (Chrome)": "/images/models/mr clean.png"
 };
 
 export default function Booking() {
